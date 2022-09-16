@@ -154,7 +154,7 @@ function mesCalculs(myJson)
    $("#visu2").append("\n" + resultat2);
 
    // Recherche des évènements de l'année de naissance :
-   $.get('evenements.txt', function(mesEvenements) {
+   $.get("evenements.txt", function(mesEvenements) {
       var lines = mesEvenements.split("\r\n");
       var numeroLignes = naissance - 1900;
       var maLigne = lines[numeroLignes];
