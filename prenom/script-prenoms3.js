@@ -8,6 +8,25 @@ function clique()
 }
 
 
+function httprequest(url) {
+   // Permet de faire une requête HTTP
+   var req = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+   // On essaye si le fichier "existe", on le récupère
+   try {
+       req.open("get", url, false);
+       req.send(null);
+   } catch (e) {
+       // Sinon on arrête la fonction
+       console.log(url + " ne peut pas être récupéré.");
+       return;
+   }
+  
+   return req.responseText;
+
+}
+
+
 function mesCalculs(myJson)
 {
    const prenom = document.getElementById("nom").value;
@@ -154,15 +173,17 @@ function mesCalculs(myJson)
    $("#visu2").append("\n" + resultat2);
 
    // Recherche des évènements de l'année de naissance :
-   $.get("evenements.txt", function(mesEvenements) {
-      var lines = mesEvenements.split("\r\n");
-      var numeroLignes = naissance - 1900;
-      var maLigne = lines[numeroLignes];
-      $("#visu3").text(
-         "Voici des évènements de " + naissance + " , l'année de votre naissance :").
-         css("color", "red").
-         css("font-size", "24px"
-      );
-      $("#zoneTexte").append(maLigne); 
-   }, 'text');
+   var mesEvenements = httprequest("https://raw.githubusercontent.com/Richab-star/Richab-star.github.io/main/prenom/evenements.txt");
+   
+   var lines = mesEvenements.split("\n");
+   var numeroLignes = naissance - 1900;
+   var maLigne = lines[numeroLignes];
+   console.log(maLigne);
+   $("#visu3").text(
+      "Voici des évènements de " + naissance + " , l'année de votre naissance :").
+      css("color", "red").
+      css("font-size", "24px"
+   );
+   $("#zoneTexte").append(maLigne); 
+   
 }
