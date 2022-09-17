@@ -154,15 +154,16 @@ function mesCalculs(myJson)
    $("#visu2").append("\n" + resultat2);
 
    // Recherche des évènements de l'année de naissance :
-   $.get("evenements.txt", function(mesEvenements) {
-      var lines = mesEvenements.split("\r\n");
-      var numeroLignes = naissance - 1900;
-      var maLigne = lines[numeroLignes];
+   $.get("evenements.json", function(objet2Js){mesEvenements(objet2Js);});
+   function mesEvenements(myJson)
+   {
+      var numeroLigne = naissance - 1900;
+      var maLigne = myJson[numeroLigne].event;
       $("#visu3").text(
          "Voici des évènements de " + naissance + " , l'année de votre naissance :").
          css("color", "red").
          css("font-size", "24px"
       );
       $("#zoneTexte").append(maLigne); 
-   }, 'text');
+   }
 }
